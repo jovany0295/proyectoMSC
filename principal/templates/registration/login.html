@@ -1,0 +1,145 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link id="pagestyle" href="{%static 'css/material-dashboard.css'%}" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<style>
+    /* Bordered form */
+form {
+  width: 450px;
+  border: 1px solid #acd6fd;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Add a hover effect for buttons */
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra style for the cancel button (red) */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.img{
+  width:300px;
+  height:300px;
+}
+.container {
+  padding: 10px;
+}
+.contenedor{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+/* The "Forgot password" text */
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 400px) {
+  span.psw {
+    display: block;
+    float: none;
+  }
+  .contenedor{display: block;}
+  .cancelbtn {
+    width: 100%;
+  }
+  form{width: 100%;}
+  
+}
+
+</style>
+<body>
+  <div class="contenedor">
+    <div class="img">
+      {% load static %}
+      <a href="{% url 'index' %}">
+      <img class="img"  src="{% static 'images/LOGO.jpg' %}" alt="My image"></a> 
+    </div>
+<form  method="post">
+  {% csrf_token %}
+  
+    
+  
+    <div class="container">
+      <label>Usuario</label>
+      <div class="input-group-append">
+      <input class="form-control" type="text" placeholder="Usuario" name="username" required>
+    </div>
+      <label>Ingrese Contraseña</label>
+      <div class="input-group-append">
+      <input ID="txtPassword" type="Password" placeholder="password" Class="form-control" name="password">
+      <div class="input-group-append">
+            <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+          </div>
+    </div>
+      <button type="submit">Entrar</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+  
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+</form> 
+ 
+</div>
+</body>
+<script type="text/javascript">
+  function mostrarPassword(){
+      var cambio = document.getElementById("txtPassword");
+      if(cambio.type == "password"){
+        cambio.type = "text";
+        $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+      }else{
+        cambio.type = "password";
+        $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+      }
+    } 
+    
+    $(document).ready(function () {
+    //CheckBox mostrar contraseña
+    $('#ShowPassword').click(function () {
+      $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+    });
+  });
+  </script>
+</html>
