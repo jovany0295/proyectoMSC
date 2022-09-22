@@ -55,7 +55,7 @@
           <div class="card">
             <div class="card-header p-3 pt-2">
               <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">person</i>
+                <i class="material-icons opacity-10">done</i>
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">Total de vistas</p>
@@ -72,11 +72,11 @@
           <div class="card">
             <div class="card-header p-3 pt-2">
               <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">person</i>
+                <i class="material-icons opacity-10">business</i>
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">Clientes Activos</p>
-                <h4 class="mb-0">3</h4>
+                <h4 class="mb-0">{{context.clientes}}</h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -89,16 +89,16 @@
           <div class="card">
             <div class="card-header p-3 pt-2">
               <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                <i class="material-icons opacity-10">weekend</i>
+                <i class="material-icons opacity-10">campaign</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Sales</p>
-                <h4 class="mb-0">$103,430</h4>
+                <p class="text-sm mb-0 text-capitalize">Campañas</p>
+                <h4 class="mb-0">{{context.clientes}}</h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">% </span></p>
             </div>
           </div>
         </div>
@@ -114,12 +114,12 @@
               </div>
             </div>
             <div class="card-body">
-              <h6 class="mb-0 ">Website Views</h6>
-              <p class="text-sm ">Last Campaign Performance</p>
+              <h6 class="mb-0 ">Vistas de la ultima semana</h6>
+              <p class="text-sm ">.</p>
               <hr class="dark horizontal">
               <div class="d-flex ">
                 <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+                <p class="mb-0 text-sm">  </p>
               </div>
             </div>
           </div>
@@ -134,12 +134,12 @@
               </div>
             </div>
             <div class="card-body">
-              <h6 class="mb-0 "> Daily Sales </h6>
-              <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>
+              <h6 class="mb-0 "> Vistas por mes </h6>
+              <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>)  </p>
               <hr class="dark horizontal">
               <div class="d-flex ">
                 <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm"> updated 4 min ago </p>
+                <p class="mb-0 text-sm"> </p>
               </div>
             </div>
           </div>
@@ -154,12 +154,12 @@
               </div>
             </div>
             <div class="card-body">
-              <h6 class="mb-0 ">Completed Tasks</h6>
-              <p class="text-sm ">Last Campaign Performance</p>
+              <h6 class="mb-0 ">Usuarios por mes</h6>
+              <p class="text-sm "></p>
               <hr class="dark horizontal">
               <div class="d-flex ">
                 <i class="material-icons text-sm my-auto me-1">schedule</i>
-                <p class="mb-0 text-sm">just updated</p>
+                <p class="mb-0 text-sm"></p>
               </div>
             </div>
           </div>
@@ -614,10 +614,11 @@
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 
-    new Chart(ctx, {
+    
+    new Chart(ctx, { 
       type: "bar",
       data: {
-        labels: ["M", "T", "W", "T", "F", "S", "S"],
+        labels: ["7", "6","5", "4", "3", "2", "1"],
         datasets: [{
           label: "Sales",
           tension: 0.4,
@@ -625,7 +626,8 @@
           borderRadius: 4,
           borderSkipped: false,
           backgroundColor: "rgba(255, 255, 255, .8)",
-          data: [50, 20, 10, 22, 50, 10, 40],
+          data: ["{{context.views7}}", "{{context.views6}}",  "{{context.views5}}",  "{{context.views4}}",  
+          "{{context.views3}}",  "{{context.views2}}",  "{{context.views1}}"],
           maxBarThickness: 6
         }, ],
       },
