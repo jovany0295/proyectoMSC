@@ -1,4 +1,5 @@
 from asyncio import QueueEmpty
+from ctypes.wintypes import PINT
 from msilib.schema import ListView
 from multiprocessing import context
 from datetime import datetime, timedelta
@@ -10,8 +11,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from json import dumps 
 import MySQLdb
+
 from .forms import *
-from .models import clientes as Clientes
+from .models import clientes as Clientes,paquete as Paquete, campaña as Campaña
 from django.views.generic import ListView
 
 # Create your views here.
@@ -57,8 +59,10 @@ def home(request):
     cursor.execute("SELECT count(*) from login where fecha BETWEEN  '%s'and '%s'" % (fecha1+' 00:00:00',fecha1+' 23:59:59'))
     views1 = cursor.fetchone()[0]
     db.close()
+    cantclientes= Clientes.objects.count()
+    cantcampañas= Campaña.objects.count()
     c = Context({'usuarios':usuarios, 'login':login, 'clientes':clientes, 'views7':views7,'views6':views6,
-    'views5':views5,'views4':views4,'views3':views3,'views2':views2,'views1':views1})
+    'views5':views5,'views4':views4,'views3':views3,'views2':views2,'views1':views1,'cantclientes':cantclientes,'cantcampaña':cantcampañas})
     return render(request,'plantilla/index.html', {'context': c})
 
 class ClientesListView(ListView):
@@ -73,44 +77,40 @@ class ClientesListView(ListView):
         
         form = ClientesForm(request.POST)
         if form.is_valid():
-            print('valido')
             form.save()
         self.context['form'] = form
         self.context['Clientes'] = Clientes.objects.all()
         return render(request, 'plantilla/clientes.html', self.context)
-def campañas(request):
+class CampañasListView(ListView):
+    context = {}
+    def get(self,request):
+        form = CampañasForm()
+        self.context['form'] = form
+        self.context['Campaña'] = Campaña.objects.all()
+        return render(request,'plantilla/campañas.html',self.context)
+    def post(self,request):
+        form = CampañasForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        self.context['Campaña'] = Campaña.objects.all()
+        return render(request, 'plantilla/campañas.html', self.context)
 
-    data ={
-    'form':CampañasForm()
-    }
-    if request.method=='POST':
-            addcampaña=CampañasForm(data=request.POST)
-            if addcampaña.is_valid():
-                addcampaña.save()
-                addcampaña = CampañasForm()
-                data["mensaje"]="campaña guardado"
-                print('valido')
-                return redirect('plantilla/campañas')
-            else:
-                print('invalido')
-                data["form"] = addcampaña
-    return render(request,'plantilla/campañas.html',data)
-def paquetes(request):
-    data ={
-    'form':PaquetesForm()
-    }
-    if request.method=='POST':
-            addpaquetes=PaquetesForm(data=request.POST)
-            if addpaquetes.is_valid():
-                addpaquetes.save()
-                addpaquetes = PaquetesForm()
-                data["mensaje"]="Paquete guardado"
-                print('valido')
-                return redirect('plantilla/paquete')
-            else:
-                print('invalido')
-                data["form"] = addpaquetes
-    return render(request,'plantilla/paquete.html',data)
+class PaquetesListView(ListView):
+    context = {}
+
+    def get(self,request):
+        form = PaquetesForm()
+        self.context['form'] = form
+        self.context['Paquete'] = Paquete.objects.all()
+        
+        return render(request,'plantilla/paquete.html',self.context)
+    def post(self,request):
+        form = PaquetesForm(request.POST)
+        if form.is_valid():
+            form.save()
+        self.context['form'] = form
+        self.context['Paquete'] = Paquete.objects.all()
+        return render(request, 'plantilla/paquete.html', self.context)
 
 def salir(request):
     logout(request)

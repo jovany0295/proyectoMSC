@@ -6,7 +6,7 @@ urlpatterns = [
     path('home',home,name='home'),
     path('',index,name='index'),
     path('clientes',ClientesListView.as_view(),name='clientes'),
-    path('campañas',campañas,name='campañas'),
-    path('paquetes',paquetes,name='paquetes'),
+    path('campañas',CampañasListView.as_view(),name='campañas'),
+    path('paquetes',PaquetesListView.as_view(),name='paquetes'),
     path('salir',salir,name='salir')
 ]

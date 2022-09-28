@@ -94,8 +94,7 @@ class ClientesForm(forms.ModelForm):
 class CampañasForm(forms.ModelForm):
     class Meta:
         model = campaña
-        fields = ('nombre_campaña', 'status','video','imagen','fecha_inicial','fecha_final','fecha_creacion'
-        ,'cliente','paquete')
+        fields = ('nombre_campaña', 'status','video','imagen','cliente','paquete','fecha_inicial','fecha_final')
         widgets={
             
             'nombre_campaña': forms.TextInput(
@@ -108,7 +107,7 @@ class CampañasForm(forms.ModelForm):
             ),
             'status': forms.Select(
                 attrs={
-                    'class':'form-control',
+                    'class':'form-select',
                     'placeholder': 'Estado de la campaña',
                     'id':'status',
                     'required': 'required',
@@ -116,7 +115,7 @@ class CampañasForm(forms.ModelForm):
             ),
             'paquete': forms.Select(
                 attrs={
-                    'class':'form-control',
+                    'class':'form-select',
                     'placeholder': 'Tipo de paquete ',
                     'id':'paquete',
                     'required': 'required',
@@ -124,19 +123,50 @@ class CampañasForm(forms.ModelForm):
             ),  
             'cliente': forms.Select(
                 attrs={
-                    'class':'form-control',
+                    'class':'form-select',
                     'placeholder': 'Cliente',
                     'id':'cliente',
                     'required': 'required',
                 }
             ),
-           
+            'video': forms.FileInput(
+                attrs={
+                    'class':'form-control',
+                    'type':'file',
+                    'id':'video',
+                    'required': 'required',
+                }
+            ),
+            'imagen': forms.FileInput(
+                attrs={
+                    'class':'form-control',
+                    'type':'file',
+                    'id':'imagen',
+                    'required': 'required',
+                }
+            ),
+            'fecha_inicial': forms.DateInput(
+                attrs={
+                    'class':'form-control',
+                    'type':'date',
+                    'id':'fecha_inicial',
+                    'required': 'required',
+                }
+            ),
+            'fecha_final': forms.DateInput(
+                attrs={
+                    'class':'form-control',
+                    'type':'date',
+                    'id':'fecha_final',
+                    'required': 'required',
+                }
+            ),      
            
         }
 class PaquetesForm(forms.ModelForm):
     class Meta:
         model = paquete
-        fields = ('nombre_paquete','duracion','frecuencia','precio','fecha_creacion')
+        fields = ('nombre_paquete','duracion','frecuencia','precio')
         widgets={
             'nombre_paquete': forms.TextInput(
                 attrs={

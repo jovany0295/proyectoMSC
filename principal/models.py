@@ -13,32 +13,32 @@ class clientes(models.Model):
     telefono_empresa = models.CharField(max_length=20, null= False,blank= False, unique= False)
     direccion_empresa = models.CharField(max_length=100, null= False, blank= False, unique= False )
     cfdi = models.CharField(max_length=20,null= False, blank= False, unique= False)
-    fecha_creacion = models.DateTimeField(default=timezone.now)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.nombre_cliente
 class paquete(models.Model):
     nombre_paquete = models.CharField(max_length=80, null= False, blank= False, unique= True)
-    duracion = models.CharField(max_length=80, null= False, blank= False, unique= True)
-    frecuencia = models.CharField(max_length=80, null= False, blank= False, unique= True)
-    precio = models.IntegerField(null= False, blank= False, unique= True)
-    fecha_creacion = models.DateTimeField(default=timezone.now)
+    duracion = models.CharField(max_length=80, null= False, blank= False )
+    frecuencia = models.CharField(max_length=80, null= False, blank= False)
+    precio = models.IntegerField(null= False, blank= False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.nombre_paquete
-class campaña(models.Model):
-    LOAN_STATUS = (
-        ('A', 'Activo'),
-        ('I', 'Inactivo'),
-        ('S', 'Suspendido'),
-        )
+class campaña(models.Model):   
+    LOAN_STATUS = [
+        ("ACTIVO", "ACTIVO"),
+        ("INACTIVO", "INACTIVO"),
+        ("SUSPENDIDO", "SUSPENDIDO"),
+    ]
     nombre_campaña = models.CharField(max_length=80, null= False, blank= False, unique= True)
-    paquete = models.ForeignKey(paquete, on_delete=models.CASCADE)
-    cliente = models.ForeignKey(clientes, on_delete=models.CASCADE)
-    status = models.CharField(max_length=30, choices=LOAN_STATUS, blank=True, default='A')
-    video = models.FileField()
-    imagen = models.FileField()
-    fecha_inicial = models.DateField(max_length=80, null= False, blank= False, unique= True)
-    fecha_final = models.DateField(max_length=80, null= False, blank= False, unique= True)
-    fecha_creacion = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=11,choices=LOAN_STATUS, blank= False)
+    paquete = models.ForeignKey(paquete, on_delete=models.CASCADE,null=True)
+    cliente = models.ForeignKey(clientes, on_delete=models.CASCADE,null=True)
+    video = models.FileField(upload_to='album/videos', null=False)
+    imagen = models.FileField(upload_to='album/images',null=False)
+    fecha_inicial = models.DateField(max_length=80, null= False, blank= False, default=timezone.now)
+    fecha_final = models.DateField(max_length=80, null= False, blank= False,default=timezone.now)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.nombre_campaña
     

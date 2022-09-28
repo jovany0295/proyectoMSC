@@ -34,30 +34,27 @@
       <table class="table table-sm">
         <thead>
           <tr>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th scope="col">Nombre paquete</th>
+            <th scope="col">Duración</th>
+            <th scope="col">Frecuencia</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Fecha de creación</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">1</th>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2"></td>
-            <td></td>
-          </tr>
+          {% if Paquete %}
+            {% for Paquete in Paquete %}
+            <tr>
+              <td>{{Paquete.nombre_paquete}}</td>
+              <td>{{Paquete.duracion}}</td>
+              <td>{{Paquete.frecuencia}}</td>
+              <td>{{Paquete.precio}}</td> 
+              <td>{{Paquete.fecha_creacion}}</td>          
+            </tr>}
+            {%endfor%}
+          {%else%}
+            <h1>No hay registros</h1>
+          {%endif%}
         </tbody>
       </table>
       {{mensaje}}
@@ -69,29 +66,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form class="row g-3" action=""  method="POST">
-                  {% csrf_token %}
-                  <div class="col-sm-6 col-md-4">
-                    <label  class="form-label">Nombre Cliente</label>
-                    {{form.nombre_paquete}}
+                {% load crispy_forms_tags %}
+                <form method="post">
+                  {%csrf_token%}
+                  {%if form%}
+          
+                  <div class="row bg-white">
+                      {%for field in form%}
+                      <div class="col-md-6 p-2">{{field|as_crispy_field}}</div>
+                      {%endfor%}
+          
+                  <div class="col-md-12">
+                  <ul class="list-inline text-center">
+                      <li class="list-inline-item">
+                          <button type="submit" class="btn btn-primary">Guardar</button>
+                      </li>
+                  </ul>
                   </div>
-                  <div class="col-6 col-md-8">
-                    <label  class="form-label">Razón Social</label>
-                    {{form.duracion}}                  
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <label  class="form-label">Nombre del contacto</label>
-                    {{form.frecuencia}} 
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <label  class="form-label">Puesto</label>
-                    {{form.precio}}
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <label  class="form-label">Puesto</label>
-                    {{form.fecha_creacion}}
-                  </div>
-                  <button type="submit" class="btn btn-primary">Guardar</button>
+                       </div>
+                  {%endif%}
+          
+              </form>
                 </form>
               </div>
               </div>

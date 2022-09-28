@@ -1,4 +1,3 @@
-
 {% include "plantilla/base.html" %}
 {% block content %}
 
@@ -50,20 +49,20 @@
         </thead>
         <tbody class="table-group-divider">
           {% if Clientes %}
-          {% for Clientes in Clientes %}
-          <tr>
-            <td>{{Clientes.nombre_cliente}}</td>
-            <td>{{Clientes.razon_social}}</td>
-            <td>{{Clientes.nombre_contacto}}</td>
-            <td>{{Clientes.puesto}}</td>
-            <td>{{Clientes.telefono_contacto}}</td>
-            <td>{{Clientes.email_contacto}}</td>
-            <td>{{Clientes.email_empresa}}</td>
-            <td>{{Clientes.telefono_empresa}}</td>
-            <td>{{Clientes.direccion_empresa}}</td>
-            <td>{{Clientes.cfdi}}</td>
-          </tr>}
-          {%endfor%}
+            {% for Clientes in Clientes %}
+            <tr>
+              <td>{{Clientes.nombre_cliente}}</td>
+              <td>{{Clientes.razon_social}}</td>
+              <td>{{Clientes.nombre_contacto}}</td>
+              <td>{{Clientes.puesto}}</td>
+              <td>{{Clientes.telefono_contacto}}</td>
+              <td>{{Clientes.email_contacto}}</td>
+              <td>{{Clientes.email_empresa}}</td>
+              <td>{{Clientes.telefono_empresa}}</td>
+              <td>{{Clientes.direccion_empresa}}</td>
+              <td>{{Clientes.cfdi}}</td>
+            </tr>}
+            {%endfor%}
           {%else%}
             <h1>No hay registros</h1>
           {%endif%}

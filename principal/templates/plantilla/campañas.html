@@ -31,36 +31,41 @@
       <div class="d-grid gap-2 d-md-block text-end">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Crear campaña</button>
       </div>
-      <table class="table table-sm">
+      <table class="table table-striped-columns">
         <thead>
           <tr>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th scope="col">Nombre campaña</th>
+            <th scope="col">status</th>
+            <th scope="col">video</th>
+            <th scope="col">imagen</th>
+            <th scope="col">cliente</th>
+            <th scope="col">paquete</th>
+            <th scope="col">fecha_inicial</th>
+            <th scope="col">fecha_final</th>
+            <th scope="col">Fecha_creación</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr>
-            <th scope="row">1</th>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2"></td>
-            <td></td>
-          </tr>
+          {% if Campaña %}
+            {% for Campaña in Campaña %}
+              <tr>
+                <td>{{Campaña.nombre_campaña}}</td>
+                <td>{{Campaña.status}}</td>
+                <td>{{Campaña.video}}</td>
+                <td>{{Campaña.imagen}}</td>
+                <td>{{Campaña.cliente}}</td>
+                <td>{{Campaña.paquete}}</td>
+                <td>{{Campaña.fecha_inicial}}</td>
+                <td>{{Campaña.fecha_final}}</td>
+                <td>{{Campaña.fecha_creacion}}</td>
+              </tr>}
+            {%endfor%}
+          {%else%}
+            <h1>No hay registros</h1>
+          {%endif%}
         </tbody>
       </table>
-      {{mensaje}}
+
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content ">
@@ -69,46 +74,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form class="row g-3" action=""  method="POST">
-                  {% csrf_token %}
-                  <div class="col-sm-6 col-md-6">
-                    <label  class="form-label">Nombre Campaña</label>
-                    {{form.nombre_campaña}}
+                {% load crispy_forms_tags %}
+                <form method="post" enctype="multipart/form-data">
+                  {%csrf_token%}
+                  {%if form%}
+          
+                  <div class="row bg-white">
+                      {%for field in form%}
+                      <div class="col-md-6 p-2">{{field|as_crispy_field}}</div>
+                      {%endfor%}
+          
+                  <div class="col-md-12">
+                  <ul class="list-inline text-center">
+                      <li class="list-inline-item">
+                          <button type="submit" class="btn btn-primary">Guardar</button>
+                      </li>
+                  </ul>
                   </div>
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Estado de la campaña</label>
-                    {{form.status}}                  
-                  </div>   
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Paquete</label>
-                    {{form.paquete}}                  
-                  </div>   
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Cliente</label>
-                    {{form.cliente}}                  
-                  </div> 
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Seleccionar video</label>
-                    {{form.video}}                  
-                  </div> 
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Seleccionar Imagen</label>
-                    {{form.imagen}}                  
-                  </div> 
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Fecha Inicial</label>
-                    {{form.fecha_inicial}}                  
-                  </div> 
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Fecha Final</label>
-                    {{form.fecha_final}}                  
-                  </div>
-                  <div class="col-6 col-md-6">
-                    <label  class="form-label">Fecha Final</label>
-                    {{form.fecha_creacion}}                  
-                  </div>
-                  <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
+                       </div>
+                  {%endif%}
+          
+              </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -128,8 +114,6 @@
   <script src="{%static 'js/plugins/chartjs.min.js'%}"></script>
 
 
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js'%}"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{%static 'js/material-dashboard.min.js'%}"></script>
 </body>
