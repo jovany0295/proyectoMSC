@@ -43,6 +43,7 @@
             <th scope="col">fecha_inicial</th>
             <th scope="col">fecha_final</th>
             <th scope="col">Fecha_creación</th>
+            <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -58,6 +59,7 @@
                 <td>{{Campaña.fecha_inicial}}</td>
                 <td>{{Campaña.fecha_final}}</td>
                 <td>{{Campaña.fecha_creacion}}</td>
+                <td> <a class="btn btn-outline-danger" href="{% url 'deletecam' Campaña.id %}">Eliminar</a></td>
               </tr>}
             {%endfor%}
           {%else%}

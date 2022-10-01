@@ -39,6 +39,7 @@
             <th scope="col">Frecuencia</th>
             <th scope="col">Precio</th>
             <th scope="col">Fecha de creación</th>
+            <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -49,7 +50,8 @@
               <td>{{Paquete.duracion}}</td>
               <td>{{Paquete.frecuencia}}</td>
               <td>{{Paquete.precio}}</td> 
-              <td>{{Paquete.fecha_creacion}}</td>          
+              <td>{{Paquete.fecha_creacion}}</td>   
+              <td> <a class="btn btn-outline-danger" href="{% url 'deletep' Paquete.id %}">Eliminar</a></td>       
             </tr>}
             {%endfor%}
           {%else%}

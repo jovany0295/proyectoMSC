@@ -4,6 +4,7 @@ from msilib.schema import ListView
 from multiprocessing import context
 from datetime import datetime, timedelta
 from tkinter.tix import Form
+from django.shortcuts import get_object_or_404
 
 from django.template import Context, Template
 from django.shortcuts import render, redirect
@@ -62,7 +63,7 @@ def home(request):
     cantclientes= Clientes.objects.count()
     cantcampañas= Campaña.objects.count()
     c = Context({'usuarios':usuarios, 'login':login, 'clientes':clientes, 'views7':views7,'views6':views6,
-    'views5':views5,'views4':views4,'views3':views3,'views2':views2,'views1':views1,'cantclientes':cantclientes,'cantcampaña':cantcampañas})
+    'views5':views5,'views4':views4,'views3':views3,'views2':views2,'views1':views1,'cantclientes':cantclientes,'cantcampañas':cantcampañas})
     return render(request,'plantilla/index.html', {'context': c})
 
 class ClientesListView(ListView):
@@ -74,13 +75,24 @@ class ClientesListView(ListView):
         self.context['Clientes'] = Clientes.objects.all()
         return render(request,'plantilla/clientes.html',self.context)
     def post(self,request):
-        
         form = ClientesForm(request.POST)
         if form.is_valid():
             form.save()
         self.context['form'] = form
         self.context['Clientes'] = Clientes.objects.all()
         return render(request, 'plantilla/clientes.html', self.context)
+def deletecliente(request, pk):
+        cliente = get_object_or_404(Clientes, id=pk)
+        cliente.delete()
+        return redirect('/clientes')
+def deletepaquete(request, pk):
+        paquete = get_object_or_404(Paquete, id=pk)
+        paquete.delete()
+        return redirect('/paquetes')
+def deletecampaña(request, pk):
+        campaña = get_object_or_404(Campaña, id=pk)
+        campaña.delete()
+        return redirect('/campañas')
 class CampañasListView(ListView):
     context = {}
     def get(self,request):

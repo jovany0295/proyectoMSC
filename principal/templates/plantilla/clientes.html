@@ -44,7 +44,8 @@
             <th scope="col">Telefono Empresa</th>
             <th scope="col">Direccion Empresa</th>
             <th scope="col">Cfdi</th>
-            <th scope="col">Fecha</th>
+            <th scope="col">Fecha creación</th>
+            <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -61,6 +62,8 @@
               <td>{{Clientes.telefono_empresa}}</td>
               <td>{{Clientes.direccion_empresa}}</td>
               <td>{{Clientes.cfdi}}</td>
+              <td>{{Clientes.fecha_creacion}}</td>
+              <td> <a class="btn btn-outline-danger" href="{% url 'deletec' Clientes.id %}">Eliminar</a></td>
             </tr>}
             {%endfor%}
           {%else%}
