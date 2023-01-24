@@ -94,7 +94,7 @@ class ClientesForm(forms.ModelForm):
 class CampañasForm(forms.ModelForm):
     class Meta:
         model = campaña
-        fields = ('nombre_campaña', 'status','video','imagen','cliente','paquete','fecha_inicial','fecha_final')
+        fields = ('nombre_campaña', 'status','categoria','video','imagen','cliente','paquete','fecha_inicial','fecha_final')
         widgets={
             
             'nombre_campaña': forms.TextInput(
@@ -110,6 +110,14 @@ class CampañasForm(forms.ModelForm):
                     'class':'form-select',
                     'placeholder': 'Estado de la campaña',
                     'id':'status',
+                    'required': 'required',
+                }
+            ),
+            'categoria': forms.Select(
+                attrs={
+                    'class':'form-select',
+                    'placeholder': 'Categoria',
+                    'id':'categoria',
                     'required': 'required',
                 }
             ),

@@ -1,0 +1,44 @@
+{% include "plantilla/base.html" %}
+{% block content %}
+{% load static %}
+<link href="{%static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+<link href="{%static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+
+<!-- CSS Files -->
+
+<body class="g-sidenav-show bg-gray-200">
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+    <div class="container">
+      <div class="d-flex justify-content-between  mb-2">
+        <a class="btn btn-info align-self-center" href="{% url 'paquetes' %}" >Regresar</a>
+        <p class="text-capitalize text-center fs-1 align-self-center ">Actualizar paquete</p>
+        <div class="align-self-center" ></div>
+      </div>
+
+      {% load crispy_forms_tags %}
+      <form method="post">
+        {%csrf_token%}
+        {%if form%}
+
+        <div class="row ">
+          {%for field in form%}
+          <div class="col-md-6 p-2">{{field|as_crispy_field}}</div>
+          {%endfor%}
+
+          <div class="col-md-12">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <button type="submit" class="btn btn-success">Guardar</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {%endif%}
+      </form>
+    </div>
+  </main>
+</body>
+
+
+{% endblock %}

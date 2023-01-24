@@ -18,7 +18,6 @@
     Dashboard 2 
   </title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     
 </head>
@@ -35,14 +34,10 @@
         <thead>
           <tr>
             <th scope="col">Nombre campaña</th>
-            <th scope="col">status</th>
-            <th scope="col">video</th>
-            <th scope="col">imagen</th>
-            <th scope="col">cliente</th>
-            <th scope="col">paquete</th>
-            <th scope="col">fecha_inicial</th>
-            <th scope="col">fecha_final</th>
-            <th scope="col">Fecha_creación</th>
+            <th scope="col">Status</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Paquete</th>
             <th scope="col">Acción</th>
           </tr>
         </thead>
@@ -52,22 +47,66 @@
               <tr>
                 <td>{{Campaña.nombre_campaña}}</td>
                 <td>{{Campaña.status}}</td>
-                <td>{{Campaña.video}}</td>
-                <td>{{Campaña.imagen}}</td>
+                <td>{{Campaña.categoria}}</td>
                 <td>{{Campaña.cliente}}</td>
                 <td>{{Campaña.paquete}}</td>
-                <td>{{Campaña.fecha_inicial}}</td>
-                <td>{{Campaña.fecha_final}}</td>
-                <td>{{Campaña.fecha_creacion}}</td>
-                <td> <a class="btn btn-outline-danger" href="{% url 'deletecam' Campaña.id %}">Eliminar</a></td>
-              </tr>}
+                <td> 
+                  <a href="#" class="btn btn-outline-info" data-bs-toggle="modal"
+                  data-bs-target="#modalv{{Campaña.id}}">Ver</a>
+                <a class="btn btn-outline-primary" href="{% url 'updatecampaña' Campaña.id %}"  >Actualizar</a>
+                <a class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#modal-delete-item-{{Campaña.id}}">Eliminar</a>
+              </td>       
+            </tr>
+            <div class="modal modal-blur fade" id="modal-delete-item-{{Campaña.id}}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog ">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Eliminar</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p class="">Estas seguro de eliminar a: {{Campaña.nombre_campaña}}</p>
+                </div>
+                <div class="modal-footer">
+                  <a href="{% url 'deletecam' Campaña.id %}" class="btn btn-outline-danger">Si</a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal" tabindex="-1" id="modalv{{Campaña.id}}">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Datos Completos</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p class="fw-bold">Nombre Campaña: {{Campaña.nombre_campaña}} </p>
+                  <p class="fw-bold">Status: {{Campaña.status}}</p>
+                  <p class="fw-bold">Categoria: {{Campaña.categoria}}</p>
+                  <p class="fw-bold">Paquete: {{Campaña.paquete}}</p>
+                  <p class="fw-bold">Cliente: {{Campaña.cliente}}</p>
+                  <p class="fw-bold">Video: {{Campaña.video}}</p>
+                  <p class="fw-bold">Imagen: {{Campaña.imagen}}</p>
+                  <p class="fw-bold">Fecha Inicial: {{Campaña.fecha_inicial}}</p>
+                  <p class="fw-bold">Fecha Final:{{Campaña.fecha_final}}</p>
+                  <p class="fw-bold">Fecha Creacion: {{Campaña.fecha_creacion}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
             {%endfor%}
           {%else%}
             <h1>No hay registros</h1>
           {%endif%}
         </tbody>
       </table>
-
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content ">
@@ -81,7 +120,7 @@
                   {%csrf_token%}
                   {%if form%}
           
-                  <div class="row bg-white">
+                  <div class="row ">
                       {%for field in form%}
                       <div class="col-md-6 p-2">{{field|as_crispy_field}}</div>
                       {%endfor%}
@@ -105,6 +144,8 @@
             </div>
           </div>
         </div>
+
+       
     </div>
   </main>
 
@@ -121,5 +162,6 @@
 </body>
 
 </html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 {% endblock %}

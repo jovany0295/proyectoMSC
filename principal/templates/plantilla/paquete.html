@@ -17,19 +17,14 @@
   <title>
     Dashboard 2 
   </title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-    
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script> 
 </head>
-
 <body class="g-sidenav-show  bg-gray-200">
   <main class="main-content position-relative ">
-    
     <div class="container">
       <p class="text-capitalize text-center fs-1">Paquetes</p>
       <div class="d-grid gap-2 d-md-block text-end">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Agregar cliente</button>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">Agregar paquete</button>
       </div>
       <table class="table table-sm">
         <thead>
@@ -51,8 +46,31 @@
               <td>{{Paquete.frecuencia}}</td>
               <td>{{Paquete.precio}}</td> 
               <td>{{Paquete.fecha_creacion}}</td>   
-              <td> <a class="btn btn-outline-danger" href="{% url 'deletep' Paquete.id %}">Eliminar</a></td>       
-            </tr>}
+              <td>
+                <a class="btn btn-outline-info" onclick="modal()">Ver</a> 
+                <a class="btn btn-outline-primary" href="{% url 'updatepaquete' Paquete.id %}"  >Actualizar</a>
+                <a class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#modal-delete-item-{{Paquete.id}}">Eliminar</a>
+              </td>       
+            </tr>
+            <div class="modal modal-blur fade" id="modal-delete-item-{{Paquete.id}}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog ">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Eliminar</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p class="">Estas seguro de eliminar a: {{Paquete.nombre_paquete}}</p>
+                </div>
+                <div class="modal-footer">
+                  <a href="{% url 'deletep' Paquete.id %}" class="btn btn-outline-danger">Si</a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </div>
             {%endfor%}
           {%else%}
             <h1>No hay registros</h1>
@@ -60,13 +78,14 @@
         </tbody>
       </table>
       {{mensaje}}
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content ">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar paquete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content ">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar Paquete</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
               <div class="modal-body">
                 {% load crispy_forms_tags %}
                 <form method="post">
@@ -78,27 +97,68 @@
                       <div class="col-md-6 p-2">{{field|as_crispy_field}}</div>
                       {%endfor%}
           
-                  <div class="col-md-12">
-                  <ul class="list-inline text-center">
-                      <li class="list-inline-item">
-                          <button type="submit" class="btn btn-primary">Guardar</button>
-                      </li>
-                  </ul>
+                    <div class="col-md-12">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </li>
+                    </ul>
+                    </div>
                   </div>
-                       </div>
                   {%endif%}
-          
-              </form>
                 </form>
               </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Limpiar</button>
-              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Limpiar</button>
             </div>
           </div>
         </div>
+      </div>
+      </div>
+      <div class="modal fade" id="ModalVer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content ">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Paquete</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre paquete</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">Frecuencia</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Fecha de creación</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  {% if Paquete %}
+                    {% for Paquete in Paquete %}
+                    <tr>
+                      <td>{{Paquete.nombre_paquete}}</td>
+                      <td>{{Paquete.duracion}}</td>
+                      <td>{{Paquete.frecuencia}}</td>
+                      <td>{{Paquete.precio}}</td> 
+                      <td>{{Paquete.fecha_creacion}}</td>   
+                    </tr>
+                    {%endfor%}
+                  {%else%}
+                    <h1>No hay registros</h1>
+                  {%endif%}
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Limpiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </main>
 
@@ -114,8 +174,14 @@
   <script async defer src="https://buttons.github.io/buttons.js'%}"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{%static 'js/material-dashboard.min.js'%}"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 </body>
 
 </html>
-
+<script type="text/javascript">
+  function modal(){
+    $('#ModalVer').modal('show');
+  }
+</script>
 {% endblock %}

@@ -30,8 +30,31 @@ class campaña(models.Model):
         ("INACTIVO", "INACTIVO"),
         ("SUSPENDIDO", "SUSPENDIDO"),
     ]
+    LOAN_CAT = [
+        ("AGROPECUARIO", "AGROPECUARIO"),
+        ("AGRUPACIONES", "AGRUPACIONES"),
+        ("ALIMENTOS", "ALIMENTOS"),
+        ("AUTOMOTRIZ Y AFINES", "AUTOMOTRIZ Y AFINEZ"),
+        ("BEBIDAS", "BEBIDAS"),
+        ("COMPUTO, INTERNET, TELEFONIA Y TV PAGA", "COMPUTO, INTERNET, TELEFONIA Y TV PAGA"),
+        ("EDUCACION Y DEPORTE", "EDUCACION Y DEPORTE"),
+        ("GOBIERNO Y POLITICA", "GOBIERNO Y POLITICA"),
+        ("INMOBILIRIA Y CONSTRUCCION", "INMOBILIARIA Y CONSTRUCCION"),
+        ("LIMPIEZA DOMESTICA", "LIMPIEZA DOMESTICA"),
+        ("MASCOTAS", "MASCOTAS"),
+        ("MUEBLES, ELECTRODOMESTICOS Y ACCESORIOS", "MUEBLES, ELECTRODOMESTICOS Y ACCESORIOS"),
+        ("ROPA, CALZADO Y ACCESORIOS", "ROPA, CALZADO Y ACCESORIOS"),
+        ("SALUD Y BELLEZA", "SALUD Y BELLEZA"),
+        ("SERVICIOS FINANCIEROS", "SERVICIOS FINANCIEROS"),
+        ("SERVICIOS PROFESIONALES", "SERVICIOS PROFESIONALES"),
+        ("SERVICIOS VARIOS", "SERVICIOS VARIOS"),
+        ("TURISMO, RECREACION Y ENTRENAMIENTO", "TURISMO, RECREACION Y ENTRETENIMIENTO"),
+        ("VARIOS, HOGAR Y OFICINA", "VARIOS, HOGAR Y OFICINA"),
+    ]
+  
     nombre_campaña = models.CharField(max_length=80, null= False, blank= False, unique= True)
     status = models.CharField(max_length=11,choices=LOAN_STATUS, blank= False)
+    categoria = models.CharField(max_length=50,choices=LOAN_CAT, blank= False)
     paquete = models.ForeignKey(paquete, on_delete=models.CASCADE,null=True)
     cliente = models.ForeignKey(clientes, on_delete=models.CASCADE,null=True)
     video = models.FileField(upload_to='album/videos', null=False)
