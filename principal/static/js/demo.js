@@ -197,7 +197,35 @@ demo = {
                 });
               }
               });
-
+              $.ajax({
+                type: "GET", // define the type of HTTP verb we want to use (POST for our form)
+                url: "http://unifi.ricsanet.com/edad.php", // the url where we want to POST
+                //data: {"dato" : mac}, // our data object
+                //beforeSend: function(){ $("#validar").val('Validando...');},
+                success: function(data){
+                    console.log(data.slice(0,2));
+                    Chartist.Pie('#chartEdad', dataPreferences, optionsPreferences);
+                    Chartist.Pie('#chartEdad', {
+                        labels: [data.slice(0,1) + '%', data.slice(1,3)+'%', data.slice(3,5)+'%',data.slice(5,6)+'%'],
+                        series: [data.slice(0,1), data.slice(1,3), data.slice(3,5), data.slice(5,6)]
+                    });
+                  }
+                  });
+    
+                  $.ajax({
+                    type: "GET", // define the type of HTTP verb we want to use (POST for our form)
+                    url: "http://unifi.ricsanet.com/salario.php", // the url where we want to POST
+                    //data: {"dato" : mac}, // our data object
+                    //beforeSend: function(){ $("#validar").val('Validando...');},
+                    success: function(data){
+                        console.log(data.slice(0,2));
+                        Chartist.Pie('#chartSalario', dataPreferences, optionsPreferences);
+                        Chartist.Pie('#chartSalario', {
+                            labels: [data.slice(0,2) + '%', data.slice(2,4)+'%', data.slice(4,5)+'%',data.slice(5,6)+'%',data.slice(6,7)+'%',data.slice(7,8)+'%'],
+                            series: [data.slice(0,2), data.slice(2,4), data.slice(4,5), data.slice(5,6), data.slice(6,7), data.slice(7,8)]
+                        });
+                      }
+                      });
         var dataSales = {
             labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
             series: [
@@ -256,9 +284,9 @@ demo = {
         var chartHours = Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
 
         var data = {
-            labels: ['ANCLAS', 'C.RIO', 'EMOTION', 'G.PLAZA', 'PUEBLITO', 'UPN', 'RENA', 'TOXICA', 'ZOCALO'],
+            labels: ['ANCLAS', 'CIMA','C.RIO', 'EMOTION', 'G.PLAZA', 'MERCADO-C','PUEBLITO', 'UPN', 'RENA', 'TOXICA', 'ZOCALO'],
             series: [
-                [542, 443, 320, 780, 553, 453, 326, 434, 568]
+                [542, 443, 320, 780, 553, 453, 326, 434, 568,489,630]
             ]
         };
 

@@ -39,7 +39,7 @@ def home(request):
     fecha1 = datetime.today()-timedelta(days=1)
     fecha1 = fecha1.strftime('%Y-%m-%d')
    
-    db = MySQLdb.connect(user='sistemas', db='ricsa', passwd='Aca$', host='localhost')
+    db = MySQLdb.connect(user='sistemas', db='ricsa', passwd='Aca$', host='localhost', port=3306)
     cursor = db.cursor()
     cursor.execute('SELECT count(*) FROM usuarios')
     usuarios =  cursor.fetchone()[0]
@@ -67,14 +67,24 @@ def home(request):
     c = Context({'usuarios':usuarios, 'login':login, 'clientes':clientes, 'views7':views7,'views6':views6,
     'views5':views5,'views4':views4,'views3':views3,'views2':views2,'views1':views1,'cantclientes':cantclientes,'cantcampañas':cantcampañas})
     return render(request,'plantilla/index.html', {'context': c})
-class ReportesListView(ListView):
+class UsuariosListView(ListView):
     context = {}
     def get(self,request):
-        clientes = Clientes.objects.all()
-        campañas = Campaña.objects.all()
-        self.context = {'Campañas':campañas, 'Clientes':clientes}
-
-        return render(request,'plantilla/reportes.html', self.context)
+        db = MySQLdb.connect(user='sistemas', db='ricsa', passwd='Aca$', host='localhost', port=3306)
+        cursor = db.cursor()
+        cursor.execute('SELECT * FROM usaurios where fecha = "2023-02-27 00:00:00"')
+        usuarios = cursor.fetchone()
+        db.close()
+        return render(request,'plantilla/usuarios.html', {'context': usuarios})
+class ViewsListView(ListView):
+    context = {}
+    def get(self,request):
+        db = MySQLdb.connect(user='sistemas', db='ricsa', passwd='Aca$', host='localhost', port=3306)
+        cursor = db.cursor()
+        cursor.execute('SELECT * FROM login where fecha = "2023-02-27 00:00:00"')
+        login = cursor.fetchone()
+        db.close()
+        return render(request,'plantilla/views.html', {'context': login})
 
 class ClientesListView(ListView):
     context = {}
